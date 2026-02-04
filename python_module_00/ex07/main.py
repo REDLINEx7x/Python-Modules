@@ -40,14 +40,14 @@ def test_ft_exercise(exercise_file_name):
         if exercise_file_name == "ft_seed_inventory":
             print("Testing with different seed types and units:\n")
             # Test with packets
-            ft_function("tomato", 15, "packets")
+            ft_function("loz", 15, "packets")
             # Test with grams
-            ft_function("carrot", 8, "grams")
+            ft_function("L7CHICH", 800, "grams")
             # Test with area
-            ft_function("lettuce", 12, "area")
+            ft_function("l7za9", 190, "area")
             # Test with unknown unit
             print("\nTesting with unknown unit:")
-            ft_function("basil", 5, "unknown")
+            ft_function("bassla", 5, "unknown")
         else:
             # Run your function normally (no parameters)
             ft_function()
