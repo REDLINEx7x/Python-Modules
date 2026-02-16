@@ -9,7 +9,8 @@ class Plant:
     def increas_height(self, amount=1):
         self.height += amount
         print(f"{self.name} grew {amount}cm")
-
+    def plant_score(self):
+        return self.height
 
 class FloweringPlant(Plant):
     def __init__(self, name, height, age, color):
@@ -35,6 +36,7 @@ class GardenManager:
     gardens_count  = 0
     def __init__(self, owner):
         self.owner = owner
+        self.plants = []
         GardenManager.gardens_count += 1
 
     @classmethod
@@ -44,8 +46,9 @@ class GardenManager:
             manager = cls(name)
             new_gardens.append(manager)
         return(new_gardens)
-
-
-
-
-
+    def add_plant(self, plant):
+        self.plants.append(plant)
+    class GardenStats:
+        @staticmethod
+        def sum_scores(plant_list):
+            return
