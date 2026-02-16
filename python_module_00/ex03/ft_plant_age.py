@@ -1,4 +1,4 @@
-def  ft_plant_age():
+def ft_plant_age():
 
     age = int(input("Enter plant age in days: "))
 

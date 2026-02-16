@@ -9,6 +9,8 @@ class Plant:
     def increas_height(self, amount=1):
         self.height += amount
         print(f"{self.name} grew {amount}cm")
+        def description(self):
+                return f"{self.name} {self.height}cm"
     def plant_score(self):
         return self.height
 
@@ -31,6 +33,9 @@ class PrizeFlower(FloweringPlant):
         self.prize_points = prize_points
     def plant_score(self):
         return self.height + self.prize_points
+    def description(self):
+        base_info = super().description()
+        return f"{base_info}, Prize points: {self.prize_points}"
 
 class GardenManager:
     gardens_count  = 0
@@ -38,7 +43,7 @@ class GardenManager:
         self.owner = owner
         self.plants = []
         GardenManager.gardens_count += 1
-
+        self.total_growth = 0
     @classmethod
     def create_garden_network(cls, owners):
         new_gardens = []
@@ -48,7 +53,20 @@ class GardenManager:
         return(new_gardens)
     def add_plant(self, plant):
         self.plants.append(plant)
+    def grow_all(self):
+        for plant in self.plants:
+            plant.increas_hight(1)
+        self.total_growth += 1
+
     class GardenStats:
+        sum_total = 0
         @staticmethod
         def sum_scores(plant_list):
-            return
+            for plant in plant_list:
+                sum_total = plant.plant_score()
+            return sum_total
+    def report(self):
+        print(f"=== {self.name}'s Garden Report ===")
+        for plant in self.plants:
+            print(f"{plant.description()}")
+
