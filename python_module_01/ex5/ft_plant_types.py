@@ -13,7 +13,10 @@ class Plant:
     def get_info(self) -> str:
         """Return formatted information about the plant."""
         # Only print attributes every plant has
-        return f"{self.name} ({self.__class__.__name__}): {self.height}cm, {self.age} days"
+        return (
+            f"{self.name} ({self.__class__.__name__}): "
+            f"{self.height}cm, {self.age} days"
+        )
 
 
 class Flower(Plant):
@@ -37,7 +40,13 @@ class Flower(Plant):
 class Tree(Plant):
     """A tree with a trunk diameter attribute."""
 
-    def __init__(self, name: str, height: int, age: int, trunk_diameter: int) -> None:
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        trunk_diameter: int,
+    ) -> None:
         """Initialize a tree."""
         super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
@@ -46,7 +55,8 @@ class Tree(Plant):
         """Return a message describing the shade area."""
         shade_area = 3.14 * ((self.height / 100) ** 2)
         return (
-            f"{self.name} provides {shade_area} square meters of shade\n"
+            f"{self.name} provides {shade_area} square meters of shade"
+            "\n"
         )
 
     def get_tree_info(self) -> str:
@@ -80,6 +90,7 @@ class Vegetable(Plant):
             f"{self.name} is rich in {self.nutritional_value}"
         )
 
+
 flowers = [
     Flower("Rose", 25, 30, "red"),
     Flower("Sunflower", 20, 25, "yellow"),
@@ -102,4 +113,3 @@ print(f"{flowers[i].bloom()}")
 print(f"{trees[i].get_tree_info()}")
 print(f"{trees[i].produce_shade()}")
 print(f"{vegetables[i].get_vegetable_info()}")
-
