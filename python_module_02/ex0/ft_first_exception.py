@@ -1,9 +1,16 @@
-def check_temperature(temp_str):
+def check_temperature(temp_str: str) -> int:
+    """
+    Validates and converts a temperature string to an integer.
+
+    Raises:
+        ValueError: If the input is not a number or falls outside
+            the safe range (0°C to 40°C).
+    """
     try:
         i = int(temp_str)
     except ValueError:
-        i = None
         raise ValueError(f"Error: '{temp_str}' is not a valid number")
+
     if i > 40:
         raise ValueError(f"Error: {i}°C is too hot for plants (max 40°C)")
     elif i < 0:
@@ -11,23 +18,34 @@ def check_temperature(temp_str):
 
     return i
 
-def test_temperature_input():
+
+def test_temperature_input() -> None:
+    """
+    Runs a series of test cases to verify the temperature checker logic.
+
+    Tests valid input, non-numeric input, and out-of-range temperatures
+    to ensure the program handles exceptions gracefully.
+    """
     print("=== Garden Temperature Checker ===\n")
+
     print("Testing temperature: 25")
     value = check_temperature("25")
     print(f"Temperature {value}°C is perfect for plants!\n")
+
     print("Testing temperature: abc")
     try:
         check_temperature("abc")
     except ValueError as error:
         print(error)
         print()
+
     print("Testing temperature: 100")
     try:
         check_temperature("100")
     except ValueError as error:
         print(error)
         print()
+
     print("Testing temperature: -50")
     try:
         check_temperature("-50")
@@ -35,6 +53,7 @@ def test_temperature_input():
         print(error)
     finally:
         print("\nAll tests completed - program didn't crash!")
-if __name__ == "__main__":
 
+
+if __name__ == "__main__":
     test_temperature_input()
