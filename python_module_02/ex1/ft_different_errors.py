@@ -45,8 +45,7 @@ def test_error_types() -> None:
         garden_operation("file not found")
     except Exception:
         print("Caught an error, but program continues!\n")
-    finally:
-        print("All error types tested successfully!")
+print("All error types tested successfully!")
 
 
 if __name__ == "__main__":
