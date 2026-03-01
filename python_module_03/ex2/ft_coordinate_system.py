@@ -31,7 +31,7 @@ if __name__=="__main__":
 
     # Initial coordinate setup and distance calculation
     tp0 = (0, 0, 0)
-    tp1 = (10, 20, 5)
+    tp1 = (-39, -23, -11)
     print(f"Position created: {tp1}")
 
     # Distance calculation using the 3D Euclidean formula
@@ -41,13 +41,13 @@ if __name__=="__main__":
     print()
 
     # Parsing valid coordinate string
-    coordinates = "3,4,0"
+    coordinates = "-39, -23, -11"
     print(f"Parsing coordinates: \"{coordinates}\"")
     tp2 = tuple_handling(coordinates)
     print(f"Parsed position: {tp2}")
 
     distance = float(math.sqrt(tp2[0]**2 + tp2[1]**2 + tp2[2]**2))
-    print(f"Distance between {tp0} and {tp2}: {distance}")
+    print(f"Distance between {tp0} and {tp2}: {distance:.2f}")
     print()
 
     # Parsing invalid coordinate string to demonstrate error handling
