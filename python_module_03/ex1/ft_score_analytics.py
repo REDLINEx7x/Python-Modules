@@ -2,12 +2,7 @@ import sys
 
 
 def main() -> None:
-    """
-    Processes and analyzes player scores provided via command-line arguments.
 
-    Calculates total, average, high, low, and range of valid integer scores.
-    Skips any non-numerical input gracefully.
-    """
     print("=== Player Score Analytics ===")
     list_len = len(sys.argv)
 
@@ -38,8 +33,10 @@ def main() -> None:
             print("No valid numerical scores were found.")
 
     else:
-        print("No scores provided. Usage: "
-              "python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: "
+            "python3 ft_score_analytics.py <score1> <score2> ..."
+        )
 
 
 if __name__ == "__main__":

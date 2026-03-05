@@ -1,6 +1,7 @@
 from typing import Generator
 
-def event_generator(n):
+
+def event_generator(n: int) -> Generator[dict, None, None]:
     players = ["alice", "bob", "charlie"]
     actions = ["killed monster", "found treasure", "leveled up"]
 
@@ -16,14 +17,15 @@ def event_generator(n):
         }
         yield event
 
-def ft_fibonacci(n):
+
+def ft_fibonacci(n: int) -> Generator[int, None, None]:
     a, b = 0, 1
     for i in range(n):
         yield a
         a, b = b, a + b
 
 
-def ft_prime(n: int):
+def ft_prime(n: int) -> Generator[int, None, None]:
     count = 0
     num = 2
 
@@ -38,7 +40,8 @@ def ft_prime(n: int):
             count += 1
         num += 1
 
-def main():
+
+def main() -> None:
 
     total_events = 0
     high_level_players = 0
@@ -49,20 +52,20 @@ def main():
     print("=== Game Data Stream Processor ===")
     print("Processing 1000 game events...\n")
     for event in stram_wizard:
-        player_id = event['id']
-        name = event['player']
-        lvl = event['level']
-        action = event['action']
+        player_id = event["id"]
+        name = event["player"]
+        lvl = event["level"]
+        action = event["action"]
         if player_id <= 3:
             print(f"Event {player_id}: Player {name} (level {lvl}) {action}")
         if player_id == 4:
             print("...")
         total_events += 1
-        if event['level'] >= 10:
+        if event["level"] >= 10:
             high_level_players += 1
-        if event['action'] == "found treasure":
+        if event["action"] == "found treasure":
             treasure += 1
-        if event['action'] == "leveled up":
+        if event["action"] == "leveled up":
             level_up += 1
     print("=== Stream Analytics ===\n")
     print(f"Total events processed: {total_events}")
@@ -82,5 +85,13 @@ def main():
     print("Prime numbers (first 5):", end=" ")
     for i in range(5):
         print(next(prime_wizard), end=", " if i < 4 else "\n")
+
+
 if __name__ == "__main__":
     main()
+# gen = event_generator(1000000)
+
+# lst = list(event_generator(1000000))
+
+# print(f"Generator size: {sys.getsizeof(gen)} bytes")
+# print(f"List size:      {sys.getsizeof(lst)} bytes")

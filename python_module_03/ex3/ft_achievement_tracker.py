@@ -1,6 +1,9 @@
-alice = set(['first_kill', 'level_10', 'treasure_hunter', 'speed_demon'])
-bob = set(['first_kill', 'level_10', 'boss_slayer', 'collector'])
-charlie = set(['level_10', 'treasure_hunter', 'boss_slayer', 'speed_demon', 'perfectionist'])
+alice = set(["first_kill", "level_10", "treasure_hunter", "speed_demon"])
+bob = set(["first_kill", "level_10", "boss_slayer", "collector"])
+charlie = set(
+    ["level_10", "treasure_hunter", "boss_slayer",
+     "speed_demon", "perfectionist"]
+)
 
 print("=== Achievement Tracker System ===\n")
 print(f"Player alice achievements: {alice}")
@@ -24,3 +27,14 @@ alice_unic = alice.difference(bob)
 print(f"Alice unique: {alice_unic}")
 bob_unic = bob.difference(alice)
 print(f"Bob unique: {bob_unic}")
+
+
+def display_achievements(
+    achievements_dict: dict
+) -> dict:
+    result = {}
+    for key, value in achievements_dict.items():
+        result[key] = (
+            f"{value['name']}: {value['description']}"
+        )
+    return result
