@@ -25,10 +25,17 @@ class NumericProcessor(DataProcessor):
         count = len(data)
         sum_data = sum(data)
         avg_data = sum_data / count
-        return f"Processed {count} numeric values, sum={sum_data}, avg={avg_data}"
+        return (
+            f"Processed {count} numeric values, "
+            f"sum={sum_data}, avg={avg_data}"
+        )
 
     def validate(self, data: Any) -> bool:
-        return isinstance(data, list) and all(isinstance(x, (int, float)) for x in data) and len(data) > 0
+        return (
+            isinstance(data, list)
+            and all(isinstance(x, (int, float)) for x in data)
+            and len(data) > 0
+        )
 
     def format_output(self, result: str) -> str:
         return super().format_output(result)
@@ -67,7 +74,6 @@ class LogProcessor(DataProcessor):
         return super().format_output(result)
 
 
-# === MAIN PROGRAM ===
 if __name__ == "__main__":
 
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
@@ -109,7 +115,6 @@ if __name__ == "__main__":
     print("=== Polymorphic Processing Demo ===\n")
     processors = [NumericProcessor(), TextProcessor(), LogProcessor()]
     data_test = [[1, 2, 3], "Hello World!", "INFO: System ready"]
-
 
     for i in range(len(processors)):
         proc = processors[i]
