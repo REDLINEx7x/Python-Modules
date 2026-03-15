@@ -19,7 +19,7 @@ class ProcessingPipeline(ABC):
     def process(self, data: Any) -> Any:
         pass
 
-    def _run_stages(self, data: Any) -> Any:
+    def run_stages(self, data: Any) -> Any:
         for stage in self.stages:
             data = stage.process(data)
         self.processed_count += 1
@@ -88,8 +88,7 @@ class JSONAdapter(ProcessingPipeline):
         super().__init__(pipeline_id)
 
     def process(self, data: Any) -> Union[str, Any]:
-        # run_pipeline triggers the stages (Input -> Transform -> Output)
-        return self._run_stages(data)
+        return self.run_stages(data)
 
 
 class CSVAdapter(ProcessingPipeline):
@@ -97,7 +96,7 @@ class CSVAdapter(ProcessingPipeline):
         super().__init__(pipeline_id)
 
     def process(self, data: Any) -> Union[str, Any]:
-        return self._run_stages(data)
+        return self.run_stages(data)
 
 
 class StreamAdapter(ProcessingPipeline):
@@ -105,7 +104,7 @@ class StreamAdapter(ProcessingPipeline):
         super().__init__(pipeline_id)
 
     def process(self, data: Any) -> Union[str, Any]:
-        return self._run_stages(data)
+        return self.run_stages(data)
 
 
 # --- Manager ---
@@ -158,7 +157,8 @@ if __name__ == "__main__":
     csv_01.add_stage(input_01)
     csv_01.add_stage(transorm_01)
     csv_01.add_stage(output_01)
-    csv_data = {"user": "redline", "action": "logged", "timestamp": "2026-10-24"}
+    csv_data = {"user": "redline", "action": "logged",
+                "timestamp": "2026-10-24"}
     print("Processing CSV data through same pipeline...")
     print(csv_01.process(csv_data))
     print()
@@ -188,3 +188,4 @@ if __name__ == "__main__":
         print("Recovery initiated: Switching to backup processor")
         print("Recovery successful: Pipeline restored, processing resumed\n")
     print("Nexus Integration complete. All systems operational.")
+    print(len(nexus.pipelines))

@@ -113,6 +113,7 @@ if __name__ == "__main__":
 
     # Polymorphic
     print("=== Polymorphic Processing Demo ===\n")
+    print("Processing multiple data types through same interface...")
     processors = [NumericProcessor(), TextProcessor(), LogProcessor()]
     data_test = [[1, 2, 3], "Hello World!", "INFO: System ready"]
 
@@ -121,6 +122,6 @@ if __name__ == "__main__":
         data = data_test[i]
         if proc.validate(data):
             result = proc.process(data)
-            print(proc.format_output(result))
+            print(f"Result {i + 1}: {result}")
 
     print("\nFoundation systems online. Nexus ready for advanced streams.")

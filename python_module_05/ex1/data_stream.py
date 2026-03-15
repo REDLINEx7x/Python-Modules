@@ -43,23 +43,23 @@ class SensorStream(DataStream):
                 key, value = data.split(":")
                 if float(value) >= float(criteria):
                     filtered_data.append(data)
-            except (ValueError, TypeError):
+            except (ValueError, TypeError, AttributeError):
                 continue
         return filtered_data
 
     def process_batch(self, data_batch: List[Any]) -> str:
         self.processed_count += 1
         self.total_items += len(data_batch)
-        temporator = []
+        temp_readings = []
         for data in data_batch:
             try:
                 key, value = data.split(":")
                 if key == "temp":
-                    temporator.append(float(value))
+                    temp_readings.append(float(value))
             except (ValueError, IndexError, AttributeError):
                 continue
-        if temporator:
-            avg = sum(temporator) / len(temporator)
+        if temp_readings:
+            avg = sum(temp_readings) / len(temp_readings)
         else:
             avg = 0
         return (
@@ -177,7 +177,6 @@ class StreamProcessor:
 if __name__ == "__main__":
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===\n")
 
-    # 1. Initializing specific streams with the output style
     print("Initializing Sensor Stream...")
     sensor = SensorStream("SENSOR_001")
     print(f"Stream ID: {sensor.stream_id}, Type: Environmental Data")
@@ -202,7 +201,6 @@ if __name__ == "__main__":
     print(f"Processing event batch: [{', '.join(event_batch)}]")
     print(event.process_batch(event_batch))
 
-    # 2. Demonstrating Subtype Polymorphism (Mixed types in one list)
     print("\n=== Polymorphic Stream Processing ===")
     print("Processing mixed stream types through unified interface...\n")
 
@@ -232,9 +230,10 @@ if __name__ == "__main__":
             print(f"- Event data: {len(mixed_batches[i])} events processed")
         i += 1
 
-    # 3. Filtering Logic
+    # 3. Filtering
     print("\nStream filtering active: High-priority data only")
-    filtered_sensors = sensor.filter_data(["temp:24.0", "temp:25.0", "error"], "24")
+    filtered_sensors = sensor.filter_data(["temp:24.0", "temp:25.0",
+                                           "error"], "24")
     filtered_transaction = transaction.filter_data(["buy:500", None], "22")
 
     print(
