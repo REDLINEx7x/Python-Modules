@@ -6,8 +6,14 @@ def main() -> None:
     print("\n=== Sacred Scroll Mastery ===\n")
     print("Testing direct alchemy.elements access:")
     print(f"alchemy.elements.create_fire(): {alchemy.elements.create_fire()}")
-    print(f"alchemy.elements.create_water(): {alchemy.elements.create_water()}")
-    print(f"alchemy.elements.create_earth(): {alchemy.elements.create_earth()}")
+    print(
+        "alchemy.elements.create_water(): "
+        f"{alchemy.elements.create_water()}"
+    )
+    print(
+        "alchemy.elements.create_earth(): "
+        f"{alchemy.elements.create_earth()}"
+    )
     print(f"alchemy.elements.create_air(): {alchemy.elements.create_air()}")
     print()
     print("Testing package-level access (controlled by __init__.py):")
