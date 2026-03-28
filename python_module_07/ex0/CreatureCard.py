@@ -19,7 +19,7 @@ class CreatureCard(Card):
             "card_played": self.name,
             "mana_used": self.cost,
             "effect": "Creature summoned to battlefield",
-            "stats": {"attack": self.attack, "health": self.health}
+        #    "stats": {"attack": self.attack, "health": self.health}
         }
 
     def attack_target(self, target: Any) -> Dict[str, Any]:

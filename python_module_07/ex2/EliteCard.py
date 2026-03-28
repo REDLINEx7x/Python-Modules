@@ -5,7 +5,6 @@ from typing import Dict
 
 
 class EliteCard(Card, Combatable, Magical):
-    """Elite card combining Card, Combatable, and Magical interfaces."""
 
     def __init__(
         self,
@@ -23,7 +22,6 @@ class EliteCard(Card, Combatable, Magical):
         self.total_mana = mana_pool
 
     def get_card_info(self) -> Dict:
-        """Return elite card information."""
         info = super().get_card_info()
         info['type'] = 'Elite'
         info['attack_power'] = self.attack_power
@@ -32,7 +30,6 @@ class EliteCard(Card, Combatable, Magical):
         return info
 
     def play(self, game_state: dict) -> dict:
-        """Deploy elite card to the battlefield."""
         return {
             'card_played': self.name,
             'mana_used': self.cost,
@@ -40,7 +37,6 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def attack(self, target) -> dict:
-        """Attack a target with melee combat."""
         target_name = target if isinstance(target, str) else target.name
         return {
             'attacker': self.name,
@@ -50,18 +46,16 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def defend(self, incoming_damage: int) -> dict:
-        """Defend against incoming damage using defense power."""
         blocked = min(self.defense_power, incoming_damage)
         taken_damage = incoming_damage - blocked
         return {
             'defender': self.name,
             'damage_taken': taken_damage,
             'damage_blocked': blocked,
-            'still_alive': taken_damage < self.attack_power
+            'still_alive': self.health > 0
         }
 
     def get_combat_stats(self) -> Dict:
-        """Return combat statistics."""
         return {
             'name': self.name,
             'attack_power': self.attack_power,
@@ -69,7 +63,6 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def cast_spell(self, spell_name: str, targets: list) -> dict:
-        """Cast a spell consuming mana."""
         mana_cost = len(targets) + 2
         self.mana_pool = max(0, self.mana_pool - mana_cost)
         return {
@@ -80,7 +73,6 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def channel_mana(self, amount: int) -> dict:
-        """Channel additional mana into the mana pool."""
         self.mana_pool += amount
         self.total_mana += amount
         return {
@@ -89,7 +81,6 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def get_magic_stats(self) -> Dict:
-        """Return magic statistics."""
         return {
             'name': self.name,
             'mana_pool': self.mana_pool,

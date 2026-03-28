@@ -39,7 +39,10 @@ class FantasyCardFactory(CardFactory):
         return SpellCard(*self.SPELLS[key])
 
     def create_artifact(self, name_or_power=None) -> ArtifactCard:
-        return ArtifactCard(*self.ARTIFACTS["mana_ring"])
+        name = name_or_power if isinstance(name_or_power, str) else "mana_ring"
+        key_map = {"mana ring": "mana_ring"}
+        key = key_map.get(name.lower(), "mana_ring")
+        return ArtifactCard(*self.ARTIFACTS[key])
 
     def create_themed_deck(self, size: int) -> dict:
         deck = []

@@ -1,19 +1,22 @@
-from ex0.Card import Card, CardRarity
+from ex0.Card import Card
+from ex0.Card import CardRarity
 from ex2.Combatable import Combatable
 from ex4.Rankable import Rankable
+
 
 class TournamentCard(Card, Combatable, Rankable):
     """A card with combat and tournament ranking capabilities."""
 
     def __init__(self, name: str, cost: int, rarity: CardRarity,
-                 attack: int, health: int,
+                 attack_power: int, health: int,
                  base_rating: int = 1200) -> None:
-        super().__init__(name, cost, rarity)  # calls Card.__init__
-        self.attack_power = attack
+        super().__init__(name, cost, rarity)
+        self.attack_power = attack_power
         self.health = health
         self.wins = 0
         self.losses = 0
-        self.rating = base_rating             # starting Elo rating
+        self.base_rating = base_rating    # ← never changes
+        self.rating = base_rating         # ← updates after each match
 
     # ━━━━━━━━━━━━━━━━━━━━━━━━
     # From Card
@@ -24,6 +27,13 @@ class TournamentCard(Card, Combatable, Rankable):
             "mana_used": self.cost,
             "effect": "Tournament card enters battlefield"
         }
+
+    def get_card_info(self) -> dict:
+        info = super().get_card_info()
+        info["type"] = "Tournament"
+        info["attack_power"] = self.attack_power
+        info["health"] = self.health
+        return info
 
     # ━━━━━━━━━━━━━━━━━━━━━━━━
     # From Combatable
@@ -57,17 +67,17 @@ class TournamentCard(Card, Combatable, Rankable):
     # From Rankable
     # ━━━━━━━━━━━━━━━━━━━━━━━━
     def calculate_rating(self) -> int:
-        """Simple Elo-style rating calculation."""
-        self.rating = 1200 + (self.wins * 16) - (self.losses * 16)
+        """Elo-style rating based on base_rating."""
+        self.rating = self.base_rating + (self.wins * 16) - (self.losses * 16)
         return self.rating
 
     def update_wins(self, wins: int) -> None:
         self.wins += wins
-        self.calculate_rating()   # recalculate after every change
+        self.calculate_rating()
 
     def update_losses(self, losses: int) -> None:
         self.losses += losses
-        self.calculate_rating()   # recalculate after every change
+        self.calculate_rating()
 
     def get_rank_info(self) -> dict:
         return {

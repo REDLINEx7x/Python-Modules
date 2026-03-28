@@ -9,7 +9,6 @@ def main() -> None:
     print("Registering Tournament Cards...")
     print()
 
-    # create two tournament cards with different base ratings
     dragon = TournamentCard(
         name="Fire Dragon",
         cost=5,
@@ -70,24 +69,3 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-
-### Verify the Rating Math
-#```
-#Fire Dragon:  base=1200, wins=1, losses=0
-#→ 1200 + (1×16) - (0×16) = 1216 ✅
-
-#Ice Wizard:   base=1150, wins=0, losses=1
-#→ 1150 + (0×16) - (1×16) = 1134 ✅
-
-#avg_rating = (1216 + 1134) // 2 = 2350 // 2 = 1175 ✅
-#```
-
-#---
-
-### Verify the IDs
-#```
-#"Fire Dragon" → split()[-1] = "Dragon" → .lower() = "dragon"
-#→ card_id = "dragon_001" ✅
-
-#"Ice Wizard"  → split()[-1] = "Wizard" → .lower() = "wizard"
-#→ card_id = "wizard_001" ✅

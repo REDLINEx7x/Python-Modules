@@ -3,7 +3,7 @@ from ex0.CreatureCard import CreatureCard
 
 
 def main() -> None:
-    print("=== DataDeck Card Foundation ===")
+    print("\n=== DataDeck Card Foundation ===\n")
     print("Testing Abstract Base Class Design:")
 
     fire_dragon = CreatureCard(
