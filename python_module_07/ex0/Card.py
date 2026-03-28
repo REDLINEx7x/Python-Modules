@@ -1,16 +1,19 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
+
 class CardRarity(Enum):
     """Enumeration of valid card rarities."""
-    COMMON    = "Common"
-    UNCOMMON  = "Uncommon"
-    RARE      = "Rare"
-    EPIC      = "Epic"
+
+    COMMON = "Common"
+    UNCOMMON = "Uncommon"
+    RARE = "Rare"
+    EPIC = "Epic"
     LEGENDARY = "Legendary"
 
     def __str__(self) -> str:
         return self.value
+
 
 class Card(ABC):
     def __init__(self, name: str, cost: int, rarity: CardRarity) -> None:
