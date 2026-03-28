@@ -1,6 +1,5 @@
+from typing import List
 from ex3.GameStrategy import GameStrategy
-from ex0.Card import Card
-from typing import Dict, List
 
 
 class AggressiveStrategy(GameStrategy):
@@ -12,32 +11,28 @@ class AggressiveStrategy(GameStrategy):
 
     def prioritize_targets(self, available_targets: list) -> list:
         """Prioritize enemy player first, then creatures."""
-        enemies = [target for target in available_targets if 'Enemy' in str(target)]
-        others = [target for target in available_targets if 'Enemy' not in str(target)]
+        enemies = [t for t in available_targets if 'Enemy' in str(t)]
+        others = [t for t in available_targets if 'Enemy' not in str(t)]
         return enemies + others
 
     def execute_turn(self, hand: list, battlefield: list) -> dict:
-        """Execute an aggressive turn: play cheap cards, deal damage."""
+        """Execute aggressive turn: play cheap cards, deal damage."""
         sorted_hand = sorted(hand, key=lambda c: c.cost)
-        mana_budget = 6
+        mana_budget = 5
         mana_used = 0
         cards_played = []
-        damage_dealt = 0
 
         for card in sorted_hand:
             if mana_used + card.cost <= mana_budget:
                 cards_played.append(card.name)
                 mana_used += card.cost
-                damage_dealt += card.cost
 
         targets = self.prioritize_targets(['Enemy Player', 'Enemy Creature'])
-
+        damage_dealt = mana_used + 3
         return {
             'strategy': self.get_strategy_name(),
-            'actions': {
-                'cards_played': cards_played,
-                'mana_used': mana_used,
-                'targets_attacked': targets[:1],
-                'damage_dealt': damage_dealt
-            }
+            'cards_played': cards_played,
+            'mana_used': mana_used,
+            'targets_attacked': targets[:1],
+            'damage_dealt': damage_dealt
         }

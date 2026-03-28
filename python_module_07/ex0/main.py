@@ -1,3 +1,4 @@
+from ex0.Card import CardRarity
 from ex0.CreatureCard import CreatureCard
 
 
@@ -8,7 +9,7 @@ def main() -> None:
     fire_dragon = CreatureCard(
         name="Fire Dragon",
         cost=5,
-        rarity="Legendary",
+        rarity=CardRarity.LEGENDARY,
         attack=7,
         health=5
     )

@@ -1,4 +1,4 @@
-from ex0.Card import Card
+from ex0.Card import Card, CardRarity
 from typing import Dict, List
 
 
@@ -8,7 +8,7 @@ class SpellCard(Card):
         self,
         name: str,
         cost: int,
-        rarity: str,
+        rarity: CardRarity,
         effect_type: str
     ) -> None:
         super().__init__(name, cost, rarity)

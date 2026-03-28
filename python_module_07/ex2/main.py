@@ -1,3 +1,4 @@
+from ex0.Card import CardRarity
 from ex2.EliteCard import EliteCard
 
 
@@ -7,7 +8,7 @@ def main() -> None:
     arcane_warrior = EliteCard(
         name='Arcane Warrior',
         cost=6,
-        rarity='Legendary',
+        rarity= CardRarity.LEGENDARY,
         attack_power=5,
         defense_power=3,
         mana_pool=4

@@ -1,4 +1,4 @@
-from ex0.Card import Card
+from ex0.Card import Card, CardRarity
 from typing import Dict
 
 
@@ -8,7 +8,7 @@ class ArtifactCard(Card):
         self,
         name: str,
         cost: int,
-        rarity: str,
+        rarity: CardRarity,
         durability: int,
         effect: str
     ) -> None:

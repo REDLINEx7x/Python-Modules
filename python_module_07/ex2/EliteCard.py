@@ -1,4 +1,4 @@
-from ex0.Card import Card
+from ex0.Card import Card, CardRarity
 from ex2.Combatable import Combatable
 from ex2.Magical import Magical
 from typing import Dict
@@ -11,7 +11,7 @@ class EliteCard(Card, Combatable, Magical):
         self,
         name: str,
         cost: int,
-        rarity: str,
+        rarity: CardRarity,
         attack_power: int,
         defense_power: int,
         mana_pool: int
