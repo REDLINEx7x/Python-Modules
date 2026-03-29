@@ -11,7 +11,7 @@ def main() -> None:
         cost=5,
         rarity=CardRarity.LEGENDARY,
         attack=7,
-        health=5
+        health=5,
     )
 
     print("\nCreatureCard Info:")
