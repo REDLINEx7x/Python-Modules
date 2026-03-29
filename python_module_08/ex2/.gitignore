@@ -1,0 +1,3 @@
+# secret config - never commit this
+.env
+
