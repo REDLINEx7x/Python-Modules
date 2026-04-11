@@ -4,10 +4,15 @@ import site
 
 
 def is_virtual_environment() -> bool:
+    # sys.prefix points to the current python installation
+    # sys.base_prefix always points to the original system python
+    # if they are different, we are inside a virtual environment
     return sys.prefix != sys.base_prefix
 
 
 def get_virtual_env_name() -> str:
+    # when a venv is activated, the shell sets VIRTUAL_ENV to the venv path
+    # os.path.basename extracts just the folder name from the full path
     venv_path = os.environ.get("VIRTUAL_ENV", "")
     if venv_path:
         return os.path.basename(venv_path)
@@ -15,14 +20,21 @@ def get_virtual_env_name() -> str:
 
 
 def get_virtual_env_path() -> str:
+    # returns the full path of the active venv
+    # returns "None" if no venv is active
     return os.environ.get("VIRTUAL_ENV", "None")
 
 
 def get_python_executable() -> str:
+    # sys.executable is the full path to the python interpreter running this script
+    # inside a venv it points to the venv's python, not the global one
     return sys.executable
 
 
 def get_site_packages_path() -> str:
+    # site.getsitepackages() returns a list of directories where packages are installed
+    # this differs between global python and a virtual environment
+    # which makes the isolation concept visible
     try:
         packages = site.getsitepackages()
         if packages:
@@ -36,6 +48,8 @@ def get_site_packages_path() -> str:
 
 
 def display_outside_venv() -> None:
+    # output shown when running outside a virtual environment
+    # warns the user and provides instructions to create and activate one
     print("MATRIX STATUS: You're still plugged in")
     print()
     print(f"Current Python: {get_python_executable()}")
@@ -55,6 +69,8 @@ def display_outside_venv() -> None:
 
 
 def display_inside_venv() -> None:
+    # output shown when running inside a virtual environment
+    # confirms isolation and shows where packages will be installed
     venv_name = get_virtual_env_name()
     venv_path = get_virtual_env_path()
     site_pkgs = get_site_packages_path()
@@ -74,6 +90,7 @@ def display_inside_venv() -> None:
 
 def main() -> None:
     try:
+        # detect the environment and route to the correct display function
         if is_virtual_environment():
             display_inside_venv()
         else:
