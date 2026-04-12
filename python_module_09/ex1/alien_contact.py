@@ -29,16 +29,22 @@ class AlienContact(BaseModel):
             raise ValueError('Contact ID must start with "AC"')
 
         # Rule 2: Physical contact must be verified
-        if self.contact_type == ContactType.physical and not self.is_verified:
+        if (self.contact_type == ContactType.physical and
+                not self.is_verified):
             raise ValueError("Physical contact reports must be verified")
 
         # Rule 3: Telepathic needs 3+ witnesses
-        if self.contact_type == ContactType.telepathic and self.witness_count < 3:
-            raise TypeError("Telepathic contact requires at least 3 witnesses")
+        if (self.contact_type == ContactType.telepathic and
+                self.witness_count < 3):
+            raise TypeError(
+                "Telepathic contact requires at least 3 witnesses"
+            )
 
         # Rule 4: Strong signal needs a message
         if self.signal_strength > 7.0 and not self.message_received:
-            raise ValueError("Strong signals (>7.0) must include a received message")
+            raise ValueError(
+                "Strong signals (>7.0) must include a received message"
+            )
 
         return self  # Always return self!
 

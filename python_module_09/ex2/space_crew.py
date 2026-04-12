@@ -42,13 +42,21 @@ class SpaceMission(BaseModel):
         senior = [Rank.commander, Rank.captain]
         has_senior = any(m.rank in senior for m in self.crew)
         if not has_senior:
-            raise TypeError("Mission must have at least one Commander or Captain")
+            raise TypeError(
+                "Mission must have at least one "
+                "Commander or Captain"
+            )
 
         # Rule 3: Long missions need 50% experienced crew
         if self.duration_days > 365:
-            experienced = [m for m in self.crew if m.years_experience >= 5]
+            experienced = [
+                m for m in self.crew if m.years_experience >= 5
+            ]
             if len(experienced) / len(self.crew) < 0.5:
-                raise ValueError("Long missions need 50% experienced crew (5+ years)")
+                raise ValueError(
+                    "Long missions need 50% experienced crew "
+                    "(5+ years)"
+                )
 
         # Rule 4: All crew must be active
         inactive = [m.name for m in self.crew if not m.is_active]
@@ -67,7 +75,7 @@ def main() -> None:
         mission_id="M2024_MARS",
         mission_name="Mars Colony Establishment",
         destination="Mars",
-        launch_date="2024-09-01T08:00:00",
+        launch_date=datetime(2024, 9, 1, 8, 0, 0),
         duration_days=900,
         budget_millions=2500.0,
         crew=[
@@ -109,11 +117,11 @@ def main() -> None:
         print(f"- {member.name} ({member.rank}) -{member.specialization}")
     print("\n=========================================")
     try:
-        unmission = SpaceMission(
+        SpaceMission(
             mission_id="M2024_MARS",
             mission_name="Mars Colony Establishment",
             destination="Mars",
-            launch_date="2024-09-01T08:00:00",
+            launch_date=datetime(2024, 9, 1, 8, 0, 0),
             duration_days=900,
             budget_millions=2500.0,
             crew=[
