@@ -32,8 +32,8 @@ class SpaceMission(BaseModel):
     mission_status: str = Field(default="planned")
     budget_millions: float = Field(..., ge=1.0, le=10000.0)
 
-    @model_validator(mode='after')
-    def validate_mission(self) -> 'SpaceMission':
+    @model_validator(mode="after")
+    def validate_mission(self) -> "SpaceMission":
         # Rule 1: Mission ID starts with "M"
         if not self.mission_id.startswith("M"):
             raise ValueError('Mission ID must start with "M"')
@@ -42,7 +42,7 @@ class SpaceMission(BaseModel):
         senior = [Rank.commander, Rank.captain]
         has_senior = any(m.rank in senior for m in self.crew)
         if not has_senior:
-            raise ValueError("Mission must have at least one Commander or Captain")
+            raise TypeError("Mission must have at least one Commander or Captain")
 
         # Rule 3: Long missions need 50% experienced crew
         if self.duration_days > 365:
@@ -56,3 +56,97 @@ class SpaceMission(BaseModel):
             raise ValueError(f"Inactive crew members not allowed: {inactive}")
 
         return self
+
+
+def main() -> None:
+
+    print("Space Mission Crew Validation")
+    print("=========================================")
+
+    sp_mission = SpaceMission(
+        mission_id="M2024_MARS",
+        mission_name="Mars Colony Establishment",
+        destination="Mars",
+        launch_date="2024-09-01T08:00:00",
+        duration_days=900,
+        budget_millions=2500.0,
+        crew=[
+            CrewMember(
+                member_id="CM001",
+                name="Sarah Connor",
+                rank=Rank.commander,
+                age=45,
+                specialization="Mission Command",
+                years_experience=20,
+            ),
+            CrewMember(
+                member_id="CM002",
+                name="John Smith",
+                rank=Rank.lieutenant,
+                age=35,
+                specialization="Navigation",
+                years_experience=10,
+            ),
+            CrewMember(
+                member_id="CM003",
+                name="Alice Johnson",
+                rank=Rank.officer,
+                age=28,
+                specialization="Engineering",
+                years_experience=5,
+            ),
+        ],
+    )
+    print("Valid mission created:")
+    print(f"Mission: {sp_mission.mission_name}")
+    print(f"ID: {sp_mission.mission_id}")
+    print(f"Destination: {sp_mission.destination}")
+    print(f"Duration: {sp_mission.duration_days} days")
+    print(f"Budget: ${sp_mission.budget_millions}M")
+    print(f"Crew size: {len(sp_mission.crew)}")
+    print("Crew members:")
+    for member in sp_mission.crew:
+        print(f"- {member.name} ({member.rank}) -{member.specialization}")
+    print("\n=========================================")
+    try:
+        unmission = SpaceMission(
+            mission_id="M2024_MARS",
+            mission_name="Mars Colony Establishment",
+            destination="Mars",
+            launch_date="2024-09-01T08:00:00",
+            duration_days=900,
+            budget_millions=2500.0,
+            crew=[
+                CrewMember(
+                    member_id="CM001",
+                    name="3abass",
+                    rank=Rank.officer,
+                    age=45,
+                    specialization="Mission Command",
+                    years_experience=20,
+                ),
+                CrewMember(
+                    member_id="CM002",
+                    name="John Smith",
+                    rank=Rank.lieutenant,
+                    age=35,
+                    specialization="Navigation",
+                    years_experience=10,
+                ),
+                CrewMember(
+                    member_id="CM003",
+                    name="Alice Johnson",
+                    rank=Rank.officer,
+                    age=28,
+                    specialization="Engineering",
+                    years_experience=5,
+                ),
+            ],
+        )
+    except Exception as e:
+        print("Expected validation error:")
+        print(e)
+
+
+if __name__ == "__main__":
+    main()

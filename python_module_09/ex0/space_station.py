@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field,ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from datetime import datetime
 from typing import Optional
 
@@ -18,8 +18,8 @@ def main() -> None:
 
     print("Space Station Data Validation")
     print("========================================")
-    # Valid station
-    station = SpaceStation(
+    # Valid sp_station
+    sp_station = SpaceStation(
         station_id="ISS001",
         name="International Space Station",
         crew_size=6,
@@ -27,18 +27,18 @@ def main() -> None:
         oxygen_level=92.3,
         last_maintenance="2026-01-15T10:30:00",  # Pydantic auto-converts!
     )
-    print("Valid station created:")
-    print(f"ID: {station.station_id}")
-    print(f"Crew: {station.crew_size} people")
-    print(f"Power: {station.power_level}")
-    print(f"Oxygen: {station.oxygen_level}")
-    print(f"Status: {'Operational' if station.is_operational else 'Offline'}")
+    print("Valid sp_station created:")
+    print(f"ID: {sp_station.station_id}")
+    print(f"Crew: {sp_station.crew_size} people")
+    print(f"Power: {sp_station.power_level}")
+    print(f"Oxygen: {sp_station.oxygen_level}")
+    print(f"Status: {'Operational' if sp_station.is_operational else 'Offline'}")
     print()
     print("========================================")
 
-    # Invalid station — triggers ValidationError
+    # Invalid sp_station — triggers ValidationError
     try:
-        SpaceStation(
+        s = SpaceStation(
             station_id="BAD",
             name="Bad Station",
             crew_size=99,  # Exceeds max of 20
@@ -46,7 +46,7 @@ def main() -> None:
             oxygen_level=50.0,
             last_maintenance="2024-01-15T10:30:00",
         )
-    except ValidationError  as e:
+    except ValidationError as e:
         print(f"Expected validation error: {e.errors()[0]['msg']}")
 
 

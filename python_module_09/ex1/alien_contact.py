@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional
-from pydantic import BaseModel, Field, model_validator, ValidationError
+from pydantic import BaseModel, Field, model_validator
 
 
 class ContactType(str, Enum):
@@ -42,6 +42,7 @@ class AlienContact(BaseModel):
 
         return self  # Always return self!
 
+
 def main():
 
     print("Alien Contact Log Validation")
@@ -67,7 +68,7 @@ def main():
         print(f"Duration: {contact.duration_minutes} minutes")
         print(f"Witnesses: {contact.witness_count}")
         print(f"Message: '{contact.message_received}'")
-    except ValidationError as e:
+    except Exception as e:
         print(e)
 
     print("\n======================================")
