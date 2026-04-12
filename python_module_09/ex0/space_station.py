@@ -18,8 +18,8 @@ def main() -> None:
 
     print("Space Station Data Validation")
     print("========================================")
-    # Valid sp_station
-    sp_station = SpaceStation(
+    # Valid station
+    station = SpaceStation(
         station_id="ISS001",
         name="International Space Station",
         crew_size=6,
@@ -27,19 +27,19 @@ def main() -> None:
         oxygen_level=92.3,
         last_maintenance=datetime(2024, 1, 15, 10, 30, 0),
     )
-    print("Valid sp_station created:")
-    print(f"ID: {sp_station.station_id}")
-    print(f"Crew: {sp_station.crew_size} people")
-    print(f"Power: {sp_station.power_level}")
-    print(f"Oxygen: {sp_station.oxygen_level}")
+    print("Valid station created:")
+    print(f"ID: {station.station_id}")
+    print(f"Crew: {station.crew_size} people")
+    print(f"Power: {station.power_level}")
+    print(f"Oxygen: {station.oxygen_level}")
     print(
         f"Status: "
-        f"{'Operational' if sp_station.is_operational else 'Offline'}"
+        f"{'Operational' if station.is_operational else 'Offline'}"
     )
     print()
     print("========================================")
 
-    # Invalid sp_station — triggers ValidationError
+    # Invalid station — triggers ValidationError
     try:
         SpaceStation(
             station_id="BAD",

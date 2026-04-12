@@ -49,7 +49,7 @@ class AlienContact(BaseModel):
         return self  # Always return self!
 
 
-def main():
+def main() -> None:
 
     print("Alien Contact Log Validation")
     print("======================================")
