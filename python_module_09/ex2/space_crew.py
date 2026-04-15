@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 from typing import List
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, ValidationError
 
 
 class Rank(str, Enum):
@@ -42,7 +42,7 @@ class SpaceMission(BaseModel):
         senior = [Rank.commander, Rank.captain]
         has_senior = any(m.rank in senior for m in self.crew)
         if not has_senior:
-            raise TypeError(
+            raise ValueError(
                 "Mission must have at least one "
                 "Commander or Captain"
             )
@@ -114,7 +114,10 @@ def main() -> None:
     print(f"Crew size: {len(sp_mission.crew)}")
     print("Crew members:")
     for member in sp_mission.crew:
-        print(f"- {member.name} ({member.rank}) -{member.specialization}")
+        print(
+            f"- {member.name} ({member.rank.value}) - "
+            f"{member.specialization}"
+        )
     print("\n=========================================")
     try:
         SpaceMission(
@@ -127,7 +130,7 @@ def main() -> None:
             crew=[
                 CrewMember(
                     member_id="CM001",
-                    name="3abass",
+                    name="jake bill",
                     rank=Rank.officer,
                     age=45,
                     specialization="Mission Command",
@@ -151,9 +154,9 @@ def main() -> None:
                 ),
             ],
         )
-    except Exception as e:
-        print("Expected validation error:")
-        print(e)
+    except ValidationError as e:
+        msg = e.errors()[0]['msg']
+        print(msg.replace("Value error, ", ""))
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, ValidationError
 
 
 class ContactType(str, Enum):
@@ -36,7 +36,7 @@ class AlienContact(BaseModel):
         # Rule 3: Telepathic needs 3+ witnesses
         if (self.contact_type == ContactType.telepathic and
                 self.witness_count < 3):
-            raise TypeError(
+            raise ValueError(
                 "Telepathic contact requires at least 3 witnesses"
             )
 
@@ -57,7 +57,7 @@ def main() -> None:
 
         contact = AlienContact(
             contact_id="AC_2024_001",
-            timestamp="2024-06-15T22:30:00",
+            timestamp=datetime(2024, 6, 15, 22, 30, 0),
             location="Area 51, Nevada",
             contact_type=ContactType.radio,
             signal_strength=8.5,
@@ -74,26 +74,26 @@ def main() -> None:
         print(f"Duration: {contact.duration_minutes} minutes")
         print(f"Witnesses: {contact.witness_count}")
         print(f"Message: '{contact.message_received}'")
-    except Exception as e:
+    except ValidationError as e:
         print(e)
 
     print("\n======================================")
 
-    # Invalid contact — telepathic with only 1 witness
     try:
         AlienContact(
             contact_id="AC_2024_002",
-            timestamp="2024-06-15T23:00:00",
+            timestamp=datetime(2024, 6, 15, 23, 0, 0),
             location="Roswell, New Mexico",
             contact_type=ContactType.telepathic,
             signal_strength=5.0,
             duration_minutes=30,
-            witness_count=1,  # Needs at least 3!
+            witness_count=1,  # Needs 3
+            message_received=None,
             is_verified=False,
         )
-    except Exception as e:
-        print("Expected validation error:")
-        print(e)
+    except ValidationError as e:
+        msg = e.errors()[0]['msg']
+        print(msg.replace("Value error, ", ""))
 
 
 if __name__ == "__main__":
