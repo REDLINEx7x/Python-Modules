@@ -42,6 +42,16 @@ if __name__ == "__main__":
         f"{sorted_artifacts[0]["name"]} ({sorted_artifacts[0]["power"]} power) comes before {sorted_artifacts[1]["name"]} ({sorted_artifacts[1]["power"]})"
     )
 
+    print("\nTesting power filter...")
+    strong_mages = power_filter(mages, 60)
+    print(f"Mages with power >= 60: {[m['name'] for m in strong_mages]}")
+
     print("\nTesting spell transformer...")
     transformed_spells = spell_transformer(spells)
-    print(f"{transformed_spells[0]} {transformed_spells[1]} {transformed_spells[2]}")
+    print(' '.join(transformed_spells))
+
+    print("\nTesting mage stats...")
+    stats = mage_stats(mages)
+    print(f"Max power: {stats['max_power']}")
+    print(f"Min power: {stats['min_power']}")
+    print(f"Average power: {stats['avg_power']}")
