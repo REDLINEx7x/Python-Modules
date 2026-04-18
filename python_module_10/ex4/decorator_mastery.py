@@ -12,6 +12,7 @@ def spell_timer(func: Callable) -> Callable:
         elapsed = time.time() - start
         print(f"Spell completed in {elapsed:.3f} seconds")
         return result
+
     return wrapper
 
 
@@ -21,13 +22,17 @@ def power_validator(min_power: int) -> Callable:
         def wrapper(*args, **kwargs):
             # find power — it's either args[0] (standalone)
             # or args[1] (instance method where args[0] is self)
-            power = args[1] if (
-                len(args) > 1 and not isinstance(args[0], int)
-            ) else args[0]
+            power = (
+                args[1]
+                if (len(args) > 1 and not isinstance(args[0], int))
+                else args[0]
+            )
             if power < min_power:
                 return "Insufficient power for this spell"
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator
 
 
@@ -44,7 +49,9 @@ def retry_spell(max_attempts: int) -> Callable:
                         f" (attempt {attempt}/{max_attempts})"
                     )
             return f"Spell casting failed after {max_attempts} attempts"
+
         return wrapper
+
     return decorator
 
 
@@ -70,17 +77,17 @@ def main():
     print("Result:", result)
 
     print("\nTesting retrying spell...")
-    attempt_count = [0]
 
     @retry_spell(max_attempts=3)
     def unstable_spell():
-        attempt_count[0] += 1
-        if attempt_count[0] < 3:
-            raise Exception("Spell unstable!")
+        raise Exception("Spell unstable!")
+
+    @retry_spell(max_attempts=3)
+    def waaagh_spell():
         return "Waaaaaaagh spelled !"
 
-    result = unstable_spell()
-    print(result)
+    print(unstable_spell())
+    print(waaagh_spell())
 
     print("\nTesting power validator...")
 
